@@ -9,8 +9,10 @@ The main purpose of this ETL pipeline is to fetch data from API, transform it an
 - **Load**: Saving the transformed data into a MySQL database which is hosted in Amazon RDS.
 
 ### Important note
-1. **Amazon RDS set up**: for simplicity, allow public access to MySQL, and set up inbound and outbound rules of Security Group in VPC.
-1.1 Inbound & Outbound rules, choose Type = MySQL/Aurora, and set Source = MyIP
-2. **MySQL connection**: connection parameters including passowrd should not be hardcoded. Use environment variable. Use .gitignore file to specify .env should not be committed.
-3. **Python library**: ensure all necessary libraries are installed
-    pip install requests pandas sqlalchemy mysql-connector-python pymysql python-dotenv
+1. **Amazon RDS set up**: for simplicity, allow public access to MySQL, and configure inbound and outbound rules of Security Group in VPC.  
+1.1 set Inbound & Outbound rules as follow, Type = MySQL/Aurora, and Source = MyIP  
+2. **Connect to MySQL Database via MySQL Workbench**： click + sign, in the pop up window, select Standard TCP. Hostname is the Endpoint of RDS.
+<img src="images/workbench.png" alt="Screenshot of the project" width="500" style="display: block; margin-left: 0;">
+3. **Connect to MySQL Database in Python**: use the sqlalchemy library. Database credentials and connection paramters are contained in .env files. To avoid exposing credential, use .gitignore file to specify .env so that .env will not be committed.  
+3. **Required pacakges**: ensure all necessary libraries are installed
+    pip install requests pandas sqlalchemy pymysql python-dotenv
