@@ -17,3 +17,9 @@ The main purpose of this ETL pipeline is to fetch data from API, transform it an
 3.**Connect to MySQL Database in Python**: use the sqlalchemy library. Database credentials and connection paramters are contained in .env files. To avoid exposing credential, use .gitignore file to specify .env so that .env will not be committed.    
 4. **Required pacakges**: ensure all necessary libraries are installed
     pip install requests pandas sqlalchemy pymysql python-dotenv
+- os for operating system operations
+- requests for making HTTP requests
+- pandas for data manipulation
+- sqlalchemy for database operations
+- dotenv for loading environment variables
+5. **Stop and Delete RDS** Don't forget to delete RDS after the project. It charges fees.
