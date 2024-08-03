@@ -8,7 +8,7 @@ The main purpose of this ETL pipeline is to fetch data from API, transform it an
 - **Transform**: Manipulating the extracted data using the pandas library. This includes filtering the data to only include universities in California and converting certain list fields into comma-separated strings.
 - **Load**: Saving the transformed data into a MySQL database which is hosted in Amazon RDS.
 
-### Important note**
+### Important note
 1. **Amazon RDS set up**: for simplicity, allow public access to MySQL, and set up inbound and outbound rules of Security Group in VPC.
 1.1 Inbound & Outbound rules, choose Type = MySQL/Aurora, and set Source = MyIP
 2. **MySQL connection**: connection parameters including passowrd should not be hardcoded. Use environment variable. Use .gitignore file to specify .env should not be committed.
