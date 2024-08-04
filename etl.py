@@ -49,9 +49,9 @@ def load(df:pd.DataFrame, table_name:str)-> None:
     mysql_db = os.getenv('MYSQL_DATABASE')
 
     with SSHTunnelForwarder(
-        (ssh_host, 22),
-        ssh_username=ssh_username,
-        ssh_pkey=ssh_private_key,
+        (ssh_host, 22), # ssh_host is IP address of EC2 instance; 22 is the default port number for SSH connections
+        ssh_username=ssh_username, # ssh_username is predefined parameters
+        ssh_pkey=ssh_private_key,  # ssh_pkey is predefined parameters
         remote_bind_address=(mysql_host, mysql_port)
     ) as tunnel:
 
