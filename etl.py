@@ -4,6 +4,7 @@ import requests
 import pandas as pd
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
+from sshtunnel import SSHTunnelForwarder
 
 def extract(country: str = "United+States") -> dict:
  
@@ -34,17 +35,35 @@ def load(df:pd.DataFrame, table_name:str)-> None:
     # Load environment variables
     load_dotenv()
     
-    # MySQL connection parameters
-    user = os.getenv('MYSQL_USER')
-    password = os.getenv('MYSQL_PASSWORD')
-    host = os.getenv('MYSQL_HOST')
-    port = os.getenv('MYSQL_PORT')
+    # SSH connection parameters
+    ssh_host = os.getenv('SSH_HOST')
+    ssh_username = os.getenv('SSH_USERNAME')
+    ssh_private_key = os.getenv('SSH_PRIVATE_KEY_PATH')
 
-    # Create a MySQL engine
-    db_engine = create_engine(f"mysql+pymysql://{user}:{password}@{host}:{port}/my_database")
-    
-    # Load the dataframe into MySQL
-    df.to_sql(table_name, db_engine, if_exists='replace', index=False)
+
+    # MySQL connection parameters
+    mysql_user = os.getenv('MYSQL_USER')
+    mysql_password = os.getenv('MYSQL_PASSWORD')
+    mysql_host = os.getenv('MYSQL_HOST')
+    mysql_port = int(os.getenv('MYSQL_PORT'))
+    mysql_db = os.getenv('MYSQL_DATABASE')
+
+    with SSHTunnelForwarder(
+        (ssh_host, 22),
+        ssh_username=ssh_username,
+        ssh_pkey=ssh_private_key,
+        remote_bind_address=(mysql_host, mysql_port)
+    ) as tunnel:
+
+        # Create a MySQL engine
+        local_port = tunnel.local_bind_port
+        db_url = f"mysql+pymysql://{mysql_user}:{mysql_password}@127.0.0.1:{local_port}/{mysql_db}"
+        db_engine = create_engine(db_url)
+
+        # Load the dataframe into MySQL
+        df.to_sql(table_name, db_engine, if_exists='replace', index=False)
+
+
 
 if __name__ == "__main__":
 	data = extract()

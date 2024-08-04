@@ -1,1 +1,4 @@
+# ignore envionrment variables
 .env
+images
+SSH_Key
