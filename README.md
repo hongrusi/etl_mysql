@@ -44,6 +44,7 @@ Allow MySQL (port 3306) to RDS Security Group;
 **Assuming RDS instance is public accessible (has public IP address)**  
 click + sign, in the pop up window, select connection method as Standard (TCP/ID).  
 Hostname is the Endpoint of RDS instance.
+
 <img src="images/workbench.png" alt="Screenshot of the project" width="500" style="display: block; margin-left: 0;">
 
 **Assuming RDS instance is NOT public accessible**   
@@ -86,5 +87,5 @@ Ensure all necessary libraries are installed
 - python-dotenv: a Python library that reads key-value pairs from a .env file and adds them to environment variables
 - sshtunnel: a library to create SSH tunnels.
 
-### 5. **Stop and Delete RDS
-**Don't forget to delete RDS after the project. It charge you fees**
+### 5. Delete RDS and EC2 after project
+Don't forget to delete resources

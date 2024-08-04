@@ -56,13 +56,12 @@ def load(df:pd.DataFrame, table_name:str)-> None:
     ) as tunnel:
 
         # Create a MySQL engine
-        local_port = tunnel.local_bind_port
+        local_port = tunnel.local_bind_port #This port is dynamically assigned when the tunnel is created.
         db_url = f"mysql+pymysql://{mysql_user}:{mysql_password}@127.0.0.1:{local_port}/{mysql_db}"
         db_engine = create_engine(db_url)
 
         # Load the dataframe into MySQL
         df.to_sql(table_name, db_engine, if_exists='replace', index=False)
-
 
 
 if __name__ == "__main__":
